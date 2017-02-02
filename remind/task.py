@@ -12,7 +12,7 @@ class Task():
 
     '''
 
-    def __init__(self, name, date='345', time='345'):
+    def __init__(self, name='Reminder', date='345', time='345'):
 
         self.name = name
         self.date = date
@@ -20,6 +20,6 @@ class Task():
 
     def notify_Desktop(self):
 
-        subprocess.Popen(['notify-send',self.name])        
-        os.system('aplay -q ~/remind/res/notifications/Mallet.wav')
-
+        #subprocess.Popen(['notify-send',self.name])        
+        #os.system('aplay -q ~/remind/res/notifications/Mallet.wav')
+        subprocess.call(['./notify.sh',self.name])
