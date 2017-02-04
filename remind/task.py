@@ -1,4 +1,6 @@
 import subprocess
+import datetime
+
 
 class Task():
     ''' Task object stores details about the task to be scheduled or reminded of
@@ -12,17 +14,26 @@ class Task():
 
     '''
 
-    def __init__(self, name='Reminder', time='345', date='345'):
+    def __init__(self, name='Reminder', time='default', date='default'):
+       
+        now = datetime.datetime.now()
 
         self.name = name
-        self.date = date
-        self.time = time
+
+        if (date == 'default'):
+           self.date = str(now.day)+ '/'+ str(now.month) + '/' + str(now.year) 
+        else:
+            self.date = date
+
+        if (time == 'default'):
+            self.time =str(now.hour) +':'+str(now.minute + 1)
+        else:
+            self.time = time
 
     def schedule(self):
         ''' Schedules the task in crontab '''
 
-        hour = self.time[:1]
-        minute = self.time[2:]
+        hour,minute = self.time.split(':')
 
         subprocess.call(['./schedule.sh',self.name, hour, minute])
 
