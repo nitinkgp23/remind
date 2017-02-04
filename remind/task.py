@@ -12,14 +12,21 @@ class Task():
 
     '''
 
-    def __init__(self, name='Reminder', date='345', time='345'):
+    def __init__(self, name='Reminder', time='345', date='345'):
 
         self.name = name
         self.date = date
         self.time = time
 
-    def notify_Desktop(self):
+    def schedule(self):
+        ''' Schedules the task in crontab '''
 
-        #subprocess.Popen(['notify-send',self.name])        
-        #os.system('aplay -q ~/remind/res/notifications/Mallet.wav')
+        hour = self.time[:1]
+        minute = self.time[2:]
+
+        subprocess.call(['./schedule.sh',self.name, hour, minute])
+
+    def notify_Desktop(self):     
+        ''' Sends a desktop notfication using notify-send '''
+
         subprocess.call(['./notify.sh',self.name])
